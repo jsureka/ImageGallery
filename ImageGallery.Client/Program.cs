@@ -30,6 +30,7 @@ builder.Services.AddAuthentication(options =>
     options.ResponseType = "code";
     /*    options.CallbackPath = new PathString("signin-oidc");*/
     options.SaveTokens = true;
+    options.GetClaimsFromUserInfoEndpoint = true;
 });
 var app = builder.Build();
 
