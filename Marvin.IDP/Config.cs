@@ -10,7 +10,8 @@ public static class Config
         { 
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            new IdentityResource("roles", "Your role(s)", new []{"role"})
+            new IdentityResource("roles", "Your role(s)", new []{"role"}),
+            new IdentityResource("country", "The country you are living in", new List<string>(){"country"})
         };
 
     public static IEnumerable<ApiResource> ApiResources =>
@@ -55,9 +56,9 @@ public static class Config
                         IdentityServerConstants.StandardScopes.Profile,
                         "roles",  
                         "imagegalleryapi.fullaccess",
-                        /*"imagegalleryapi.read",
+                        "imagegalleryapi.read",
                         "imagegalleryapi.write",
-                        "country"*/
+                        "country"
                     },
                     ClientSecrets =
                     {
