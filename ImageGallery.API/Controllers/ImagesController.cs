@@ -48,6 +48,7 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetImage")]
+        [Authorize("MustOwnImage")]
         public async Task<ActionResult<Image>> GetImage(Guid id)
         {          
             var imageFromRepo = await _galleryRepository.GetImageAsync(id);
@@ -64,6 +65,7 @@ namespace ImageGallery.API.Controllers
 
         [HttpPost()]
         [Authorize(Policy = "UserCanAddImage")]
+        [Authorize(Policy = "ClientApplciationCanWrite")]
         //[Authorize(Roles = "PayingUser")]
         public async Task<ActionResult<Image>> CreateImage([FromBody] ImageForCreation imageForCreation)
         {
@@ -111,6 +113,7 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy ="MustOwnImage")]
         public async Task<IActionResult> DeleteImage(Guid id)
         {            
             var imageFromRepo = await _galleryRepository.GetImageAsync(id);
@@ -128,6 +131,8 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "MustOwnImage")]
+
         public async Task<IActionResult> UpdateImage(Guid id, 
             [FromBody] ImageForUpdate imageForUpdate)
         {
