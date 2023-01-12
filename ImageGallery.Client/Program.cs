@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .AddJsonOptions(configure => 
+    .AddJsonOptions(configure =>
         configure.JsonSerializerOptions.PropertyNamingPolicy = null);
 builder.Services.AddAccessTokenManagement();
 // create an HttpClient used for accessing the API
@@ -22,12 +22,13 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-}    
+}
 ).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
 {
     options.AccessDeniedPath = "/Authentication/AccessDenied";
 })
-.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme , options => {
+.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+{
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.ClientId = "imagegalleryclient";
     options.Authority = "https://localhost:5001/";
