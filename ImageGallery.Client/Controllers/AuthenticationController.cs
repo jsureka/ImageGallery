@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +21,7 @@ namespace ImageGallery.Client.Controllers
         [Authorize]
         public async Task Logout()
         {
-          /*  var client = _httpClientFactory.CreateClient("IDPClient");
+            var client = _httpClientFactory.CreateClient("IDPClient");
 
             var discoveryDocumentResponse = await client
                 .GetDiscoveryDocumentAsync();
@@ -57,7 +58,7 @@ namespace ImageGallery.Client.Controllers
             if (refreshTokenRevocationResponse.IsError)
             {
                 throw new Exception(accessTokenRevocationResponse.Error);
-            }*/
+            }
 
             // Clears the  local cookie
             await HttpContext.SignOutAsync(
