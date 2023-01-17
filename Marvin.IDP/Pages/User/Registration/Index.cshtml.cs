@@ -56,7 +56,6 @@ namespace Marvin.IDP.Pages.User.Registration
             var userToCreate = new Entities.User
             {
                 UserName = Input.UserName,
-                Password = Input.Password,
                 Subject = Guid.NewGuid().ToString(),
                 //Email = Input.Email,
                 Active = true
@@ -79,7 +78,7 @@ namespace Marvin.IDP.Pages.User.Registration
                 Value = Input.FamilyName
             });
 
-            _localUserService.AddUser(userToCreate);
+            _localUserService.AddUser(userToCreate,Input.Password);
             await _localUserService.SaveChangesAsync();
 
             // create an activation link - we need an absolute URL, therefore
