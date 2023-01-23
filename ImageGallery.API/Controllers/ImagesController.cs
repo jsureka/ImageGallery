@@ -11,9 +11,11 @@ namespace ImageGallery.API.Controllers
     [Authorize]
     public class ImagesController : ControllerBase
     {
+        #region fields
         private readonly IGalleryRepository _galleryRepository;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
+        #endregion
 
         public ImagesController(
             IGalleryRepository galleryRepository,
@@ -28,7 +30,7 @@ namespace ImageGallery.API.Controllers
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Image>>> GetImages()
         {
             var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
@@ -36,14 +38,9 @@ namespace ImageGallery.API.Controllers
             {
                 throw new ArgumentNullException(nameof(ownerId), "User Identifier missing from token");
             }
-
-            // get from repo
             var imagesFromRepo = await _galleryRepository.GetImagesAsync(ownerId);
-
-            // map to model
             var imagesToReturn = _mapper.Map<IEnumerable<Image>>(imagesFromRepo);
 
-            // return
             return Ok(imagesToReturn);
         }
 
@@ -52,12 +49,10 @@ namespace ImageGallery.API.Controllers
         public async Task<ActionResult<Image>> GetImage(Guid id)
         {          
             var imageFromRepo = await _galleryRepository.GetImageAsync(id);
-
             if (imageFromRepo == null)
             {
                 return NotFound();
             }
-
             var imageToReturn = _mapper.Map<Image>(imageFromRepo);
 
             return Ok(imageToReturn);
