@@ -61,9 +61,9 @@ namespace Marvin.IDP.Services
 
             // Validate credentials
             return (user.Password == password);
-            //var verificationResult = _passwordHasher.VerifyHashedPassword(
-            //    user, user.Password, password);
-            //return (verificationResult == PasswordVerificationResult.Success);
+            var verificationResult = _passwordHasher.VerifyHashedPassword(
+                user, user.Password, password);
+            return (verificationResult == PasswordVerificationResult.Success);
         } 
 
         public async Task<User> GetUserByUserNameAsync(string userName)
